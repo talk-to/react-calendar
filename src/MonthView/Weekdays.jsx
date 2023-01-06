@@ -22,6 +22,7 @@ export default function Weekdays(props) {
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
+    firstDayOfWeek,
   } = props;
 
   const anyDate = new Date();
@@ -35,7 +36,7 @@ export default function Weekdays(props) {
     const weekdayDate = new Date(
       year,
       monthIndex,
-      weekday - getDayOfWeek(beginOfMonth, calendarType),
+      weekday - getDayOfWeek(beginOfMonth, calendarType, firstDayOfWeek),
     );
 
     const abbr = formatWeekday(locale, weekdayDate);
@@ -69,4 +70,5 @@ Weekdays.propTypes = {
   formatWeekday: PropTypes.func,
   locale: PropTypes.string,
   onMouseLeave: PropTypes.func,
+  firstDayOfWeek: PropTypes.number,
 };

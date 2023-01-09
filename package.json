@@ -1,5 +1,5 @@
 {
-  "name": "react-calendar",
+  "name": "@talk-to/react-calendar",
   "version": "4.0.0",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/cjs/index.js",
@@ -19,7 +19,6 @@
     "copy-styles": "node ./copy-styles.js",
     "jest": "jest",
     "lint": "eslint sample src test --ext .jsx,.js",
-    "postinstall": "husky install",
     "prepack": "yarn clean && yarn build",
     "prettier": "prettier --check . --cache",
     "test": "yarn lint && yarn prettier && yarn jest"
@@ -72,10 +71,13 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wojtekmaj/react-calendar.git"
+    "url": "git+https://github.com/talk-to/react-calendar.git"
   },
-  "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1",
+  "funding": "https://github.com/talk-to/react-calendar?sponsor=1",
   "packageManager": "yarn@3.1.0"
 }

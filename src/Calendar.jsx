@@ -521,6 +521,7 @@ export default class Calendar extends Component {
           showFixedNumberOfWeeks,
           showNeighboringMonth,
           showWeekNumbers,
+          firstDayOfWeek,
         } = this.props;
         const { onMouseLeave } = this;
 
@@ -540,6 +541,7 @@ export default class Calendar extends Component {
             }
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
+            firstDayOfWeek={firstDayOfWeek}
             {...commonProps}
           />
         );
@@ -703,4 +705,5 @@ Calendar.propTypes = {
   tileDisabled: PropTypes.func,
   value: isLooseValue,
   view: isView,
+  firstDayOfWeek: PropTypes.number,
 };

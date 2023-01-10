@@ -18,7 +18,7 @@ function getCalendarTypeFromLocale(locale) {
 }
 
 export default function MonthView(props) {
-  const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
+  const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks, firstDayOfWeek } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
     formatShortWeekday,
@@ -36,6 +36,7 @@ export default function MonthView(props) {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        firstDayOfWeek={firstDayOfWeek}
       />
     );
   }
@@ -52,12 +53,13 @@ export default function MonthView(props) {
         onClickWeekNumber={onClickWeekNumber}
         onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+        firstDayOfWeek={firstDayOfWeek}
       />
     );
   }
 
   function renderDays() {
-    return <Days calendarType={calendarType} {...childProps} />;
+    return <Days calendarType={calendarType} firstDayOfWeek={firstDayOfWeek} {...childProps} />;
   }
 
   const className = 'react-calendar__month-view';
@@ -95,4 +97,5 @@ MonthView.propTypes = {
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
+  firstDayOfWeek: PropTypes.number,
 };

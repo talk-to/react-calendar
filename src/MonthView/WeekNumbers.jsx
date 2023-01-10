@@ -9,7 +9,7 @@ import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
 export default function WeekNumbers(props) {
-  const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
+  const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks, firstDayOfWeek } =
     props;
 
   const numberOfWeeks = (() => {
@@ -18,7 +18,7 @@ export default function WeekNumbers(props) {
     }
 
     const numberOfDays = getDaysInMonth(activeStartDate);
-    const startWeekday = getDayOfWeek(activeStartDate, calendarType);
+    const startWeekday = getDayOfWeek(activeStartDate, calendarType, firstDayOfWeek);
 
     const days = numberOfDays - (7 - startWeekday);
     return 1 + Math.ceil(days / 7);
@@ -31,12 +31,12 @@ export default function WeekNumbers(props) {
 
     const result = [];
     for (let index = 0; index < numberOfWeeks; index += 1) {
-      result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
+      result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType, firstDayOfWeek));
     }
     return result;
   })();
 
-  const weekNumbers = dates.map((date) => getWeekNumber(date, calendarType));
+  const weekNumbers = dates.map((date) => getWeekNumber(date, calendarType, firstDayOfWeek));
 
   return (
     <Flex
@@ -65,4 +65,5 @@ WeekNumbers.propTypes = {
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
+  firstDayOfWeek: PropTypes.number,
 };

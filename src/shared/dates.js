@@ -39,8 +39,11 @@ const SATURDAY = WEEKDAYS[6];
 
 /* Simple getters - getting a property of a given point in time */
 
-export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
+export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601, firstDayOfWeek) {
   const weekday = date.getDay();
+  if(calendarType === CALENDAR_TYPES.US && typeof firstDayOfWeek === 'number') {
+    return (weekday + 7 - firstDayOfWeek) % 7;
+  }
 
   switch (calendarType) {
     case CALENDAR_TYPES.ISO_8601:
@@ -83,10 +86,10 @@ export function getBeginOfDecadeYear(date) {
  * @param {Date} date Date.
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
+export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601, firstDayOfWeek) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
-  const day = date.getDate() - getDayOfWeek(date, calendarType);
+  const day = date.getDate() - getDayOfWeek(date, calendarType, firstDayOfWeek);
   return new Date(year, monthIndex, day);
 }
 
@@ -98,10 +101,10 @@ export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
  * @param {Date} date Date.
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
+export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601, firstDayOfWeek) {
   const calendarTypeForWeekNumber =
     calendarType === CALENDAR_TYPES.US ? CALENDAR_TYPES.US : CALENDAR_TYPES.ISO_8601;
-  const beginOfWeek = getBeginOfWeek(date, calendarType);
+  const beginOfWeek = getBeginOfWeek(date, calendarType, firstDayOfWeek);
   let year = getYear(date) + 1;
   let dayInWeekOne;
   let beginOfFirstWeek;
@@ -109,7 +112,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   // Look for the first week one that does not come after a given date
   do {
     dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
-    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType, firstDayOfWeek);
     year -= 1;
   } while (date < beginOfFirstWeek);
 

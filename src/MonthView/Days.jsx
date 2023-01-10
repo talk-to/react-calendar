@@ -9,14 +9,14 @@ import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default function Days(props) {
-  const { activeStartDate, calendarType } = props;
+  const { activeStartDate, calendarType, firstDayOfWeek } = props;
   const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
 
   const year = getYear(activeStartDate);
   const monthIndex = getMonth(activeStartDate);
 
   const hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
-  const dayOfWeek = getDayOfWeek(activeStartDate, calendarType);
+  const dayOfWeek = getDayOfWeek(activeStartDate, calendarType, firstDayOfWeek);
 
   const offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
 
@@ -44,7 +44,7 @@ export default function Days(props) {
       const activeEndDate = new Date();
       activeEndDate.setFullYear(year, monthIndex, daysInMonth);
       activeEndDate.setHours(0, 0, 0, 0);
-      const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
+      const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType, firstDayOfWeek) - 1;
       return daysInMonth + daysUntilEndOfTheWeek;
     }
 
@@ -76,5 +76,6 @@ Days.propTypes = {
   calendarType: isCalendarType.isRequired,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
+  firstDayOfWeek: PropTypes.number,
   ...tileGroupProps,
 };
